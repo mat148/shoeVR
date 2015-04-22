@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<script src="js/three70.min.js"></script>
+<script src="js/three.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/Detector.js"></script>
 <script src="js/Stats.js"></script>
@@ -68,7 +68,6 @@ function init()
 	// CAMERA
 	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
-	//camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     controls = new THREE.DeviceOrientationControls( camera );
 	scene.add(camera);
@@ -79,8 +78,8 @@ function init()
 	//camera.rotation.x = -90;
 	// RENDERER
 	if ( Detector.webgl ){
-		//renderer = new THREE.WebGLRenderer( {antialias:true} );
-        renderer = new THREE.WebGLDeferredRenderer( { antialias: true } );
+		renderer = new THREE.WebGLRenderer( {antialias:true} );
+        //renderer = new THREE.WebGLDeferredRenderer( { antialias: true } );
         renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         renderer.shadowMapEnabled = true;
         renderer.shadowMapType = THREE.PCFSoftShadowMap;
@@ -129,6 +128,9 @@ function init()
 		//opacity: 0.75,
 		//transparent: true,
         color: 0x083650,
+        ambient: 0xffffff,
+        specular: 0xffffff,
+        emissive: 0x083650,
         side: THREE.BackSide,
         shininess: 500,
       });
@@ -149,7 +151,6 @@ function init()
         map: THREE.ImageUtils.loadTexture('img/skyBg2.jpg'),
         side: THREE.BackSide,
         depthWrite: false,
-		//depthTest: false,
 		fog: false,
     });
 	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
@@ -210,7 +211,7 @@ function init()
     directionalLight.shadowCameraVisible = true;
 	scene.add(directionalLight);*/
 
-	/*var hemisphereLight = new THREE.HemisphereLight(0x6a3e6d, 0x007c9a , 0.5);
+	/*var hemisphereLight = new THREE.HemisphereLight(0x6a3e6d, 0x007c9a , 0.1);
 	hemisphereLight.position.set(-1, 2, 1.5);
 	scene.add(hemisphereLight);*/
   
