@@ -124,15 +124,15 @@ function init()
 	scene.add(pillarFloor);
   
     //infinite floor texture
-    var infiniteFloorTexture = new THREE.MeshLambertMaterial({
+    var infiniteFloorTexture = new THREE.MeshPhongMaterial({
 		//opacity: 0.75,
 		//transparent: true,
         color: 0x083650,
-        ambient: 0xffffff,
-        specular: 0xffffff,
-        emissive: 0x083650,
+        //ambient: 0xffffff,
+        //specular: 0xffffff,
+        //emissive: 0x083650,
         side: THREE.BackSide,
-        shininess: 500,
+        shininess: 50,
       });
   
     //var material = new THREE.MeshPhongMaterial( { color: 0xffaa55, specular: 0x888888, shininess: 200 } );
@@ -161,7 +161,7 @@ function init()
 	////////////
   
     var pillarMaterial = new THREE.MeshPhongMaterial({
-      color: 0x000000,
+      color: 0xffffff,
       ambient: 0x062537,
       emissive: 0x6a3e6d,
       specular: 0xffffff,
@@ -205,11 +205,15 @@ function init()
   
     // LIGHT
     
-    /*var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 	directionalLight.position.set(500, 1000, 0);
     directionalLight.castShadow = true;
     directionalLight.shadowCameraVisible = true;
-	scene.add(directionalLight);*/
+	scene.add(directionalLight);
+  
+    var pointLight = new THREE.PointLight(0xff0d0d, 5, 5000);
+    pointLight.position.set(0, 10, 0);
+    scene.add(pointLight);
 
 	/*var hemisphereLight = new THREE.HemisphereLight(0x6a3e6d, 0x007c9a , 0.1);
 	hemisphereLight.position.set(-1, 2, 1.5);
