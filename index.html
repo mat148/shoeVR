@@ -161,10 +161,10 @@ function init()
 	////////////
   
     var pillarMaterial = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+      color: 0xeaeaea,
       ambient: 0x062537,
-      emissive: 0x6a3e6d,
-      specular: 0xffffff,
+      emissive: 0x919191,
+      specular: 0x6a3e6d,
       shading: THREE.FlatShading,
       fog: false,
       shininess: 50,
@@ -211,9 +211,9 @@ function init()
     directionalLight.shadowCameraVisible = true;
 	scene.add(directionalLight);
   
-    var pointLight = new THREE.PointLight(0xff0d0d, 5, 5000);
+    /*var pointLight = new THREE.PointLight(0xff0d0d, 5, 5000);
     pointLight.position.set(0, 10, 0);
-    scene.add(pointLight);
+    scene.add(pointLight);*/
 
 	/*var hemisphereLight = new THREE.HemisphereLight(0x6a3e6d, 0x007c9a , 0.1);
 	hemisphereLight.position.set(-1, 2, 1.5);
