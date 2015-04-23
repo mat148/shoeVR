@@ -89,6 +89,7 @@ function init()
       renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
       renderer.shadowMapEnabled = true;
       renderer.shadowMapType = THREE.PCFSoftShadowMap;
+      renderer.shadowMapSoft = true;
     }
   
 	container = document.getElementById( 'ThreeJS' );
@@ -208,7 +209,10 @@ function init()
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 	directionalLight.position.set(500, 1000, 0);
     directionalLight.castShadow = true;
+    directionalLight.shadowBias = -0.0018;
     directionalLight.shadowCameraVisible = true;
+    directionalLight.shadowMapWidth = 2042;
+    directionalLight.shadowMapHeight = 2042;
 	scene.add(directionalLight);
   
     /*var pointLight = new THREE.PointLight(0xff0d0d, 5, 5000);
