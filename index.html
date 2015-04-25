@@ -73,7 +73,7 @@ function init()
 	scene.add(camera);
 	camera.position.set(0,150,0);
   
-	//scene.fog = new THREE.Fog(0x6a3e6d, 300, 1000);
+	scene.fog = new THREE.Fog(0x6a3e6d, 300, 1000);
   
 	//camera.rotation.x = -90;
 	// RENDERER
@@ -114,7 +114,7 @@ function init()
         side: THREE.DoubleSide,
         transparent: true,
         color: 0xffffff,
-        emissive: 0xc3bde5,
+        //emissive: 0xc3bde5,
       });
   
     var pillarFloor = new THREE.Mesh(new THREE.PlaneGeometry(500, 500, 10, 10), pillarFloorTexture);
@@ -138,7 +138,7 @@ function init()
   
     //var material = new THREE.MeshPhongMaterial( { color: 0xffaa55, specular: 0x888888, shininess: 200 } );
   
-    var infiniteFloor = new THREE.Mesh(new THREE.PlaneGeometry(10000, 10000, 10, 10), infiniteFloorTexture);
+    var infiniteFloor = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 10, 10), infiniteFloorTexture);
     //infiniteFloor.overdraw = true;
 	infiniteFloor.position.y = -2;
 	infiniteFloor.rotation.x = Math.PI / 2;
@@ -152,27 +152,66 @@ function init()
 	var vertices = geometry.vertices;
 	var faces = geometry.faces;
 
-	var colorTop = new THREE.Color(0x6a3e6d);
-	var colorMiddle = new THREE.Color(0xe05ca0);
-	var colorBottom = new THREE.Color(0xfccdc2);
+	//var purple = new THREE.Color(0x6a3e6d);
+    var medpurple = new THREE.Color(0xbd4b8e);
+	var pink = new THREE.Color(0xe05ca0);
+	var tan = new THREE.Color(0xfccdc2);
 
 	for (var i = 0, l = faces.length; i < l; i++) {
-		var face = faces[i];
+      var face = faces[i];
 
-		var vertex1 = vertices[face.a];
-		var vertex2 = vertices[face.b];
-		var vertex3 = vertices[face.c];
+      var vertex1 = vertices[face.a];
+      var vertex2 = vertices[face.b];
+      var vertex3 = vertices[face.c];
 
-		var color1 = colorMiddle.clone();
-		color1.lerp(vertex1.y > 0 ? colorTop : colorBottom, Math.abs(vertex1.y) / 6000);
+      var color1 = tan.clone();
+      var color2 = tan.clone();
+      var color3 = tan.clone();
+//      color1.lerp(vertex1.y > 0 ? colorTop : colorBottom, Math.abs(vertex1.y) / 6000);
+      
+      if (vertex1.y > 10000) {
+        // Purple
+        color1.lerp(medpurple, Math.abs(vertex1.y) / 6000);
+      } else if (vertex1.y >100) {
+        // Pink
+        color1.lerp(pink, Math.abs(vertex1.y) / 6000);
+      } else if (vertex1.y > 000) {
+        // Tan
+        color1.lerp(tan, Math.abs(vertex1.y) / 6000);
+      } else {
+        // Purple
+        color1.lerp(medpurple, Math.abs(vertex1.y) / 6000);
+      }
+      
+      if (vertex2.y > 10000) {
+        // Purple
+        color2.lerp(medpurple, Math.abs(vertex2.y) / 6000);
+      } else if (vertex2.y >100) {
+        // Pink
+        color2.lerp(pink, Math.abs(vertex2.y) / 6000);
+      } else if (vertex2.y > 000) {
+        // Tan
+        color2.lerp(tan, Math.abs(vertex2.y) / 6000);
+      } else {
+        // Purple
+        color2.lerp(medpurple, Math.abs(vertex2.y) / 6000);
+      }
+      
+      if (vertex3.y > 10000) {
+        // Purple
+        color3.lerp(medpurple, Math.abs(vertex3.y) / 6000);
+      } else if (vertex3.y >100) {
+        // Pink
+        color3.lerp(pink, Math.abs(vertex3.y) / 6000);
+      } else if (vertex3.y > 000) {
+        // Tan
+        color3.lerp(tan, Math.abs(vertex3.y) / 6000);
+      } else {
+        // Purple
+        color3.lerp(medpurple, Math.abs(vertex3.y) / 6000);
+      }
 
-		var color2 = colorMiddle.clone();
-		color2.lerp(vertex2.y > 0 ? colorTop : colorBottom, Math.abs(vertex2.y) / 6000);
-
-		var color3 = colorMiddle.clone();
-		color3.lerp(vertex3.y > 0 ? colorTop : colorBottom, Math.abs(vertex3.y) / 6000);
-
-		face.vertexColors.push(color1, color2, color3);
+      face.vertexColors.push(color1, color2, color3);
 
 	}
 
