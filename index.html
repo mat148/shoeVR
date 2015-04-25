@@ -126,20 +126,22 @@ function init()
   
     //infinite floor texture
     var infiniteFloorTexture = new THREE.MeshPhongMaterial({
+        map: THREE.ImageUtils.loadTexture('img/FloorTexture2.png'),
 		//opacity: 0.75,
-		//transparent: true,
-        color: 0x083650,
+		transparent: true,
+        //color: 0x083650,
+        magFiler: THREE.LinearFilter,
         //ambient: 0xffffff,
         //specular: 0xffffff,
         //emissive: 0x083650,
-        side: THREE.BackSide,
-        shininess: 50,
+        side: THREE.DoubleSide,
+        //shininess: 50,
       });
   
     //var material = new THREE.MeshPhongMaterial( { color: 0xffaa55, specular: 0x888888, shininess: 200 } );
   
     var infiniteFloor = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 10, 10), infiniteFloorTexture);
-    //infiniteFloor.overdraw = true;
+    infiniteFloor.overdraw = true;
 	infiniteFloor.position.y = -2;
 	infiniteFloor.rotation.x = Math.PI / 2;
     //infiniteFloor.castShadow = false;
