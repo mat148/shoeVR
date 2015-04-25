@@ -54,7 +54,7 @@ var clock = new THREE.Clock();
 var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 
 // custom global variables
-var mesh;
+var mesh, testAni, testAni2;
 
 init();
 animate();
@@ -232,6 +232,14 @@ function init()
 	// CUSTOM //
 	////////////
   
+    var runnerTexture = new THREE.ImageUtils.loadTexture( 'img/testTile.png' );
+	testAni = new TextureAnimator( runnerTexture, 4, 4, 16, 750 ); // texture, #horiz, #vert, #total, duration.
+	var runnerMaterial = new THREE.MeshBasicMaterial( { map: runnerTexture, side:THREE.DoubleSide } );
+  
+    var runner2Texture = new THREE.ImageUtils.loadTexture( 'img/explosion.jpg' );
+	testAni2 = new TextureAnimator( runner2Texture, 4, 4, 16, 75 ); // texture, #horiz, #vert, #total, duration.
+	var runner2Material = new THREE.MeshBasicMaterial( { map: runner2Texture, side:THREE.DoubleSide } );
+  
     var pillarMaterial = new THREE.MeshPhongMaterial({
       color: 0xeaeaea,
       ambient: 0x062537,
@@ -246,13 +254,13 @@ function init()
     var pillar = new THREE.CylinderGeometry(30,30,80,20,4);
     //var pillarMaterial = new THREE.MeshLambertMaterial( { color: 0xeaeaea } );
     
-    firePillar = new THREE.Mesh(pillar, pillarMaterial);
+    firePillar = new THREE.Mesh(pillar, runnerMaterial);
     firePillar.position.set(215,0,0);
     firePillar.castShadow = true;
     firePillar.receiveShadow = true;
     scene.add(firePillar);
     
-    waterPillar = new THREE.Mesh(pillar, pillarMaterial);
+    waterPillar = new THREE.Mesh(pillar, runner2Material);
     waterPillar.position.set(-215,0,0);
     waterPillar.castShadow = true;
     waterPillar.receiveShadow = true;
@@ -331,6 +339,10 @@ function animate()
 
 function update()
 {
+  var delta = clock.getDelta(); 
+  
+  testAni.update(1000 * delta);
+  testAni2.update(1000 * delta);
 	/*if ( keyboard.pressed("z") ) 
 	{	  
 		// do something
@@ -346,11 +358,46 @@ function render()
 	renderer.render( scene, camera );
   
 //    cubeCamera.updateCubeMap( renderer, scene );
-    firePillar.visible = true;
-    waterPillar.visible = true;
-    earthPillar.visible = true;
-    airPillar.visible = true;
  
+}
+  
+function TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) 
+{	
+	// note: texture passed by reference, will be updated by the update function.
+		
+	this.tilesHorizontal = tilesHoriz;
+	this.tilesVertical = tilesVert;
+	// how many images does this spritesheet contain?
+	//  usually equals tilesHoriz * tilesVert, but not necessarily,
+	//  if there at blank tiles at the bottom of the spritesheet. 
+	this.numberOfTiles = numTiles;
+	texture.wrapS = texture.wrapT = THREE.RepeatWrapping; 
+	texture.repeat.set( 1 / this.tilesHorizontal, 1 / this.tilesVertical );
+
+	// how long should each image be displayed?
+	this.tileDisplayDuration = tileDispDuration;
+
+	// how long has the current image been displayed?
+	this.currentDisplayTime = 0;
+
+	// which image is currently being displayed?
+	this.currentTile = 0;
+		
+	this.update = function( milliSec )
+	{
+		this.currentDisplayTime += milliSec;
+		while (this.currentDisplayTime > this.tileDisplayDuration)
+		{
+			this.currentDisplayTime -= this.tileDisplayDuration;
+			this.currentTile++;
+			if (this.currentTile == this.numberOfTiles)
+				this.currentTile = 0;
+			var currentColumn = this.currentTile % this.tilesHorizontal;
+			texture.offset.x = currentColumn / this.tilesHorizontal;
+			var currentRow = Math.floor( this.currentTile / this.tilesHorizontal );
+			texture.offset.y = currentRow / this.tilesVertical;
+		}
+	};
 }
 
 </script>
