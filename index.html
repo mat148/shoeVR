@@ -56,14 +56,14 @@ var mesh, testAni, testAni2;
 var firedae;
 var loader = new THREE.ColladaLoader();
   
-  /*loader.load( 'models/fire.dae', function ( collada ) {
-    
-    //var texture = THREE.ImageUtils.loadTexture('img/');
-    var material = new THREE.MeshLambertMaterial({map: texture});
-    mesh = new THREE.Mesh(geometry, material);
+  loader.load( 'models/fire.dae', function ( collada ) {
+
     firedae = collada.scene;
-    firedae.scale.x = firedae.scale.y = firedae.scale.z = 0.3;
-  } );*/
+    firedae.scale.x = firedae.scale.y = firedae.scale.z = 0.1;
+    
+    init();
+    animate();
+  } );
   
 /*loader.options.convertUpAxis = true;
 			loader.load( 'models/fire.dae', function ( collada ) {
@@ -84,9 +84,6 @@ var loader = new THREE.ColladaLoader();
 				firedae.scale.x = firedae.scale.y = firedae.scale.z = 1;
 				firedae.updateMatrix();
     } );*/
-  
-  init();
-  animate();
 
 // FUNCTIONS 		
 function init() 
@@ -309,22 +306,7 @@ function init()
   
     //IMPORT OBJECTS
   
-    loader.load( "models/fire2.dae", function ( collada ) {
-      firedae = collada.scene;
-      /*firedae.traverse( function ( child ) {
-        if ( child instanceof THREE.SkinnedMesh ) {
-          //var animation = new THREE.Animation( child, child.geometry.animation );
-          //animation.play();
-          //camera.lookAt( child.position );
-        }
-      } );*/
-      //var firedaeMesh = new THREE.Mesh(firedae, runnerMaterial);
-      
-      firedae.scale.x = firedae.scale.y = firedae.scale.z = 1;
-      firedae.updateMatrix();
-      
-      scene.add( firedae );
-    } );
+    scene.add( firedae );
   
   
     // LIGHT
