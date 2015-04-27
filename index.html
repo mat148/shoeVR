@@ -29,6 +29,8 @@
 <script src="js/THREEx.FullScreen.js"></script>
 <script src="js/THREEx.WindowResize.js"></script>
 <script src="js/DeviceOrientationControls.js"></script>
+    
+<script src="js/OBJLoader.js"></script>
 
 <!-- Code to display an information button and box when clicked. -->
 <script src="js/jquery-1.11.2.min.js"></script>
@@ -280,7 +282,24 @@ function init()
   
     //IMPORT OBJECTS
   
-    
+    var loader = new THREE.OBJLoader();
+				loader.load( 'models/teapot.obj', function ( object ) {
+
+					object.traverse( function ( child ) {
+
+						if ( child instanceof THREE.Mesh ) {
+
+							//child.material.map = texture;
+
+						}
+
+					} );
+                    
+                    obj = object
+                    obj.scale.set(10,10,10);
+					scene.add( obj );
+
+				} );
   
   
     // LIGHT
