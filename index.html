@@ -309,7 +309,7 @@ function init()
   
     //IMPORT OBJECTS
   
-    loader.load( "models/fire.dae", function ( collada ) {
+    loader.load( "models/fire2.dae", function ( collada ) {
       firedae = collada.scene;
       /*firedae.traverse( function ( child ) {
         if ( child instanceof THREE.SkinnedMesh ) {
@@ -318,12 +318,12 @@ function init()
           //camera.lookAt( child.position );
         }
       } );*/
-      var firedaeMesh = new THREE.Mesh(firedae, runnerMaterial);
+      //var firedaeMesh = new THREE.Mesh(firedae, runnerMaterial);
       
-      //firedae.scale.x = firedae.scale.y = firedae.scale.z = 1;
-      //firedae.updateMatrix();
+      firedae.scale.x = firedae.scale.y = firedae.scale.z = 1;
+      firedae.updateMatrix();
       
-      scene.add( firedaeMesh );
+      scene.add( firedae );
     } );
   
   
