@@ -29,8 +29,12 @@
 <script src="js/THREEx.FullScreen.js"></script>
 <script src="js/THREEx.WindowResize.js"></script>
 <script src="js/DeviceOrientationControls.js"></script>
-  
-<script src="js/ColladaLoader.js"></script>
+    
+<script src="js/OBJLoader.js"></script>
+<!--<script src="js/OBJMTLLoader.js"></script>-->
+<!--<script src="js/DDSLoader.js"></script>-->
+
+<!--<script src="js/ColladaLoader.js"></script>-->
 
 <!-- Code to display an information button and box when clicked. -->
 <script src="js/jquery-1.11.2.min.js"></script>
@@ -54,7 +58,7 @@ var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 var mesh, testAni, testAni2;
   
 var firedae;
-var loader = new THREE.ColladaLoader();
+/*var loader = new THREE.ColladaLoader();
   
   loader.load( 'models/test.dae', function ( collada ) {
 
@@ -63,8 +67,23 @@ var loader = new THREE.ColladaLoader();
     
     init();
     animate();
-  } );
-  
+  } );*/
+    
+    
+/*THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+    var loader = new THREE.OBJMTLLoader();
+    loader.load( 'obj/male02/male02.obj', 'obj/male02/male02_dds.mtl', function ( object ) {
+
+    object.position.y = - 80;
+    scene.add( object );
+
+}, onProgress, onError );*/
+    
+    
+//THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
+    
+    
 /*loader.options.convertUpAxis = true;
 			loader.load( 'models/fire.dae', function ( collada ) {
 
@@ -84,6 +103,9 @@ var loader = new THREE.ColladaLoader();
 				firedae.scale.x = firedae.scale.y = firedae.scale.z = 1;
 				firedae.updateMatrix();
     } );*/
+    
+    init();
+    animate();
 
 // FUNCTIONS 		
 function init() 
@@ -306,7 +328,19 @@ function init()
   
     //IMPORT OBJECTS
   
-    scene.add( firedae );
+    //scene.add( firedae );
+    var loader = new THREE.OBJLoader( manager );
+				loader.load( 'models/test.dae', function ( object ) {
+
+					object.traverse( function ( child ) {
+
+						if ( child instanceof THREE.Mesh ) {
+
+							//child.material.map = texture;
+
+						}
+
+					} );
   
   
     // LIGHT
