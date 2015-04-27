@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<script src="js/three.min.js"></script>
+<script src="js/three70.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/Detector.js"></script>
 <script src="js/Stats.js"></script>
@@ -29,12 +29,6 @@
 <script src="js/THREEx.FullScreen.js"></script>
 <script src="js/THREEx.WindowResize.js"></script>
 <script src="js/DeviceOrientationControls.js"></script>
-    
-<script src="js/OBJLoader.js"></script>
-<!--<script src="js/OBJMTLLoader.js"></script>-->
-<!--<script src="js/DDSLoader.js"></script>-->
-
-<!--<script src="js/ColladaLoader.js"></script>-->
 
 <!-- Code to display an information button and box when clicked. -->
 <script src="js/jquery-1.11.2.min.js"></script>
@@ -44,6 +38,11 @@
 
 <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
 <script>
+/*
+	Three.js "tutorials by example"
+	Author: Lee Stemkoski
+	Date: July 2013 (three.js v59dev)
+ */
 
 // MAIN
 
@@ -56,56 +55,9 @@ var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 
 // custom global variables
 var mesh, testAni, testAni2;
-  
-var firedae;
-/*var loader = new THREE.ColladaLoader();
-  
-  loader.load( 'models/test.dae', function ( collada ) {
 
-    firedae = collada.scene;
-    firedae.scale.x = firedae.scale.y = firedae.scale.z = 0.1;
-    
-    init();
-    animate();
-  } );*/
-    
-    
-/*THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
-    var loader = new THREE.OBJMTLLoader();
-    loader.load( 'obj/male02/male02.obj', 'obj/male02/male02_dds.mtl', function ( object ) {
-
-    object.position.y = - 80;
-    scene.add( object );
-
-}, onProgress, onError );*/
-    
-    
-//THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
-
-    
-    
-/*loader.options.convertUpAxis = true;
-			loader.load( 'models/fire.dae', function ( collada ) {
-
-				firedae = collada.scene;
-
-				firedae.traverse( function ( child ) {
-
-					if ( child instanceof THREE.SkinnedMesh ) {
-
-						var animation = new THREE.Animation( child, child.geometry.animation );
-						animation.play();
-
-					}
-
-				} );
-
-				firedae.scale.x = firedae.scale.y = firedae.scale.z = 1;
-				firedae.updateMatrix();
-    } );*/
-    
-    init();
-    animate();
+init();
+animate();
 
 // FUNCTIONS 		
 function init() 
@@ -282,7 +234,7 @@ function init()
   
     var runnerTexture = new THREE.ImageUtils.loadTexture( 'img/testTile.png' );
 	testAni = new TextureAnimator( runnerTexture, 4, 4, 16, 750 ); // texture, #horiz, #vert, #total, duration.
-	var runnerMaterial = new THREE.MeshBasicMaterial( { map: runnerTexture, side:THREE.DoubleSide, transparent: true, ambient: 0x1934c7 } );
+	var runnerMaterial = new THREE.MeshBasicMaterial( { map: runnerTexture, side:THREE.DoubleSide } );
   
     var runner2Texture = new THREE.ImageUtils.loadTexture( 'img/explosion.jpg' );
 	testAni2 = new TextureAnimator( runner2Texture, 4, 4, 16, 75 ); // texture, #horiz, #vert, #total, duration.
@@ -290,12 +242,12 @@ function init()
   
     var pillarMaterial = new THREE.MeshPhongMaterial({
       color: 0xeaeaea,
-      //ambient: 0x062537,
+      ambient: 0x062537,
       emissive: 0x919191,
-      //specular: 0x6a3e6d,
+      specular: 0x6a3e6d,
       shading: THREE.FlatShading,
-      //fog: false,
-      //shininess: 50,
+      fog: false,
+      shininess: 50,
     });
     
     // cylinder
@@ -328,7 +280,6 @@ function init()
   
     //IMPORT OBJECTS
   
-    //scene.add( firedae );
     var loader = new THREE.OBJLoader( manager );
 				loader.load( 'models/test.dae', function ( object ) {
 
@@ -341,6 +292,8 @@ function init()
 						}
 
 					} );
+                    
+    scene.add( obj );
   
   
     // LIGHT
