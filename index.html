@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<script src="js/three70.min.js"></script>
+<script src="js/three.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/Detector.js"></script>
 <script src="js/Stats.js"></script>
@@ -56,7 +56,7 @@ var mesh, testAni, testAni2;
 var firedae;
 var loader = new THREE.ColladaLoader();
   
-  loader.load( 'models/fire.dae', function ( collada ) {
+  loader.load( 'models/test.dae', function ( collada ) {
 
     firedae = collada.scene;
     firedae.scale.x = firedae.scale.y = firedae.scale.z = 0.1;
