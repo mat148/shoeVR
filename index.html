@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<script src="js/three70.min.js"></script>
+<script src="js/three.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/Detector.js"></script>
 <script src="js/Stats.js"></script>
@@ -280,20 +280,7 @@ function init()
   
     //IMPORT OBJECTS
   
-    var loader = new THREE.OBJLoader( manager );
-				loader.load( 'models/test.dae', function ( object ) {
-
-					object.traverse( function ( child ) {
-
-						if ( child instanceof THREE.Mesh ) {
-
-							//child.material.map = texture;
-
-						}
-
-					} );
-                    
-    scene.add( obj );
+    
   
   
     // LIGHT
