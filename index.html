@@ -285,7 +285,7 @@ function init()
     //IMPORT OBJECTS
   
     var loader = new THREE.OBJMTLLoader();
-				loader.load( 'models/teapot.obj', 'img/ngon_sample.mtl', function ( object ) {
+				loader.load( 'models/test.obj', 'models/test.mtl', function ( object ) {
 
 					/*object.traverse( function ( child ) {
 
@@ -298,7 +298,7 @@ function init()
 					} );*/
                     
                     obj = object
-                    obj.scale.set(10,10,10);
+                    obj.scale.set(0.5,0.5,0.5);
 					scene.add( obj );
 
 				} );
