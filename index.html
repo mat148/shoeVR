@@ -60,7 +60,7 @@ var clock = new THREE.Clock();
 var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 
 // custom global variables
-var mesh, testAni, testAni2;
+var FloorDiskFire, FloorDiskWater, FloorDiskEarth, FloorDiskAir;
 
 init();
 animate();
@@ -314,18 +314,18 @@ function init()
         });
         
         // create a mesh with models geometry and material
-        var mesh = new THREE.Mesh(
+        FloorDiskFire = new THREE.Mesh(
             geometry,
             material
         );
-        mesh.position.set(-215,0,0);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        mesh.rotation.y = -0.78;
-        scene.add(mesh);
+        FloorDiskFire.position.set(-215,0,0);
+        FloorDiskFire.castShadow = true;
+        FloorDiskFire.receiveShadow = true;
+        FloorDiskFire.rotation.y = -0.78;
+        scene.add(FloorDiskFire);
+        return FloorDiskFire;
     });
-  
-  
+    
     // LIGHT
     
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
