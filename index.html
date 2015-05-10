@@ -107,7 +107,7 @@ function init()
 	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
   
 	// CONTROLS
-	//controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
   
 	// STATS
 	stats = new Stats();
@@ -298,7 +298,12 @@ function init()
     
 function loadObjects()
 {
-    loader = new THREE.JSONLoader();
+    var manager = new THREE.LoadingManager();
+    manager.onProgress = function ( item, loaded, total ) {
+        console.log( item, loaded, total );
+    };
+    
+    loader = new THREE.JSONLoader( manager );
     
     var floorDiskmaterial = new THREE.MeshPhongMaterial({
         map: THREE.ImageUtils.loadTexture('img/floorSceneMap.jpg'),
