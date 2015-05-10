@@ -61,6 +61,7 @@ var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 
 // custom global variables
 var FloorDiskFire, FloorDiskWater, FloorDiskEarth, FloorDiskAir;
+var firePillar, waterPillar, earthPillar, airPillar;
 
 loadObjects();
 init();
@@ -80,7 +81,7 @@ function init()
 	scene.add(camera);
 	camera.position.set(0,150,0);
   
-	scene.fog = new THREE.Fog(0x6a3e6d, 300, 1000);
+	scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00055);
   
 	//camera.rotation.x = -90;
 	// RENDERER
@@ -91,13 +92,13 @@ function init()
         renderer.shadowMapEnabled = true;
         renderer.shadowMapType = THREE.PCFSoftShadowMap;
     }
-	else{
+	/*else{
       renderer = new THREE.CanvasRenderer(); 
       renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
       renderer.shadowMapEnabled = true;
       renderer.shadowMapType = THREE.PCFSoftShadowMap;
       renderer.shadowMapSoft = true;
-    }
+    }*/
   
 	container = document.getElementById( 'ThreeJS' );
 	container.appendChild( renderer.domElement );
@@ -125,9 +126,9 @@ function init()
         //shininess: 50,
       });
     
-    var infiniteFloor = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 10, 10), infiniteFloorTexture);
+    var infiniteFloor = new THREE.Mesh(new THREE.PlaneBufferGeometry(20000, 20000, 10, 10), infiniteFloorTexture);
     infiniteFloor.overdraw = true;
-	infiniteFloor.position.y = -0.2;
+	infiniteFloor.position.y = -1;
 	infiniteFloor.rotation.x = Math.PI / 2;
     infiniteFloor.castShadow = false;
     infiniteFloor.receiveShadow = true;
@@ -233,8 +234,7 @@ function init()
   
     //IMPORT OBJECTS
     
-    //scene.add(FloorDiskFire);
-    loader.onLoadComplete=function(){
+    function addObjects(){
         scene.add(FloorDiskFire);
         //scene.add(FloorDiskEarth);
         //scene.add(FloorDiskWater);
@@ -251,7 +251,7 @@ function init()
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 	directionalLight.position.set(500, 1000, 0);
     directionalLight.castShadow = true;
-    //directionalLight.shadowBias = -0.0018;
+    directionalLight.shadowBias = -0.0018;
     //directionalLight.shadowCameraVisible = true;
     directionalLight.shadowMapWidth = 2042;
     directionalLight.shadowMapHeight = 2042;
@@ -292,6 +292,8 @@ function init()
     //var ambientLight = new THREE.AmbientLight(0xffffff);
     //ambientLight.color.setRGB( 255 * 0.005, 255 * 0.005, 255 * 0.005);
     //scene.add(ambientLight);
+    
+    setTimeout(function(){addObjects();},1000);
 }
     
 function loadObjects()
@@ -299,13 +301,14 @@ function loadObjects()
     loader = new THREE.JSONLoader();
     
     var floorDiskmaterial = new THREE.MeshPhongMaterial({
-        map: THREE.ImageUtils.loadTexture('img/floor_test.jpg'),
+        map: THREE.ImageUtils.loadTexture('img/floorSceneMap.jpg'),
         transparent: true,
-        //color: 0xeaeaea,
-        //ambient: 0x062537,
+        color: 0xeaeaea,
+        ambient: 0xeaeaea,
+        overdraw: 0.5,
         //specular: 0x6a3e6d,
         shading: THREE.FlatShading,
-        fog: false,
+        //fog: false,
         //shininess: 50,
     });
     
@@ -362,11 +365,12 @@ function loadObjects()
     var pillarMaterial = new THREE.MeshPhongMaterial({
         //map: THREE.ImageUtils.loadTexture('img/pillarMap.png'),
         //transparent: true,
-        //color: 0xeaeaea,
-        //ambient: 0x062537,
+        color: 0xeaeaea,
+        ambient: 0xeaeaea,
+        overdraw: 0.5,
         //specular: 0x6a3e6d,
         shading: THREE.FlatShading,
-        fog: false,
+        //fog: false,
         //shininess: 50,
     });
     
