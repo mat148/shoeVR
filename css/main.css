@@ -1,0 +1,50 @@
+html {
+  height: 100%;
+  width: 100%;
+  background-color: #1c1c1c;
+  overflow: hidden; }
+  html body {
+    height: 100%;
+    width: 100%; }
+    html body .loader {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: #1c1c1c;
+      top: 0;
+      left: 0;
+      z-index: 1; }
+      html body .loader .holder {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30%; }
+        @media only screen and (max-width: 500px) {
+          html body .loader .holder {
+            width: 80%; } }
+        html body .loader .holder .logo {
+          height: auto;
+          width: 100%; }
+        html body .loader .holder .text {
+          font-size: 1.2rem;
+          color: white;
+          font-family: "Open Sans", sans-serif;
+          -webkit-margin-before: 0;
+          -webkit-margin-after: 0;
+          text-align: center;
+          margin-top: 30px; }
+        html body .loader .holder #button {
+          height: auto;
+          width: 30%;
+          cursor: pointer;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          margin-top: 30px; }
+  html #ThreeJS {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background-color: #1c1c1c; }
