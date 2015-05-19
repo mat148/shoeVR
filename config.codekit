@@ -159,6 +159,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/img\/pillarMap.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 46452,
+		"inputAbbreviatedPath": "\/img\/pillarMap.jpg",
+		"outputAbbreviatedPath": "\/img\/pillarMap.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/img\/skyBg.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -493,6 +504,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/models\/floorTest.js",
 		"outputAbbreviatedPath": "\/models\/min\/floorTest-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 1
+		},
+	"\/models\/pillar.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/models\/pillar.js",
+		"outputAbbreviatedPath": "\/models\/min\/pillar-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,

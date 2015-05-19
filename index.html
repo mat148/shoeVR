@@ -72,7 +72,7 @@ var fire, water, earth, air;
   
 var check = false;
 
-loadObjects();
+//loadObjects();
 init();
 animate();
 
@@ -265,24 +265,6 @@ function init()
     
     //var pillarMaterial = new THREE.MeshLambertMaterial( { color: 0xeaeaea } );
     
-    
-  
-    //IMPORT OBJECTS
-    
-    function addObjects(){
-        scene.add(FloorDiskFire);
-        //scene.add(FloorDiskEarth);
-        //scene.add(FloorDiskWater);
-        //scene.add(FloorDiskAir);
-        
-        scene.add(firePillar);
-        scene.add(earthPillar);
-        scene.add(waterPillar);
-        scene.add(airPillar);
-        
-        scene.add(fire)
-    };
-    
     // LIGHT
     
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -330,95 +312,26 @@ function init()
     //ambientLight.color.setRGB( 255 * 0.005, 255 * 0.005, 255 * 0.005);
     //scene.add(ambientLight);
     
-    setTimeout(function(){addObjects();},3000);
+    loader = new THREE.JSONLoader();
     
-    // feature detection
-if (typeof document.cancelFullScreen != 'undefined' && document.fullScreenEnabled === true) {
-  // mozilla proposal
-  element.requestFullScreen();
-  document.cancelFullScreen(); 
-
-  // Webkit (works in Safari and Chrome Canary)
-  element.webkitRequestFullScreen(); 
-  document.webkitCancelFullScreen(); 
-
-  // Firefox (works in nightly)
-  element.mozRequestFullScreen();
-  document.mozCancelFullScreen(); 
-
-  // W3C Proposal
-  element.requestFullscreen();
-  document.exitFullscreen();
-}
-}
-    
-function loadObjects()
-{
-    var manager = new THREE.LoadingManager();
-    manager.onProgress = function ( item, loaded, total ) {
-        console.log( item, loaded, total );
-    };
-    
-    loader = new THREE.JSONLoader( manager );
-    
-    var floorDiskmaterial = new THREE.MeshPhongMaterial({
-        map: THREE.ImageUtils.loadTexture('img/floorSceneMap.jpg'),
-        transparent: true,
-        color: 0xeaeaea,
-        ambient: 0xeaeaea,
-        overdraw: 0.5,
-        shininess: 50,
-    });
-    
-    loader.load( "models/floorScene.js", function( geometry ) {
-        FloorDiskFire = new THREE.Mesh( geometry, floorDiskmaterial);
+    loader.load("models/floorScene.js", function( geometry ) {
+        var floorDiskMaterial = new THREE.MeshPhongMaterial({
+            map: THREE.ImageUtils.loadTexture('img/floorSceneMap.jpg'),
+            transparent: true,
+            color: 0xeaeaea,
+            ambient: 0xeaeaea,
+            overdraw: 0.5,
+            shininess: 50,
+        });
+        
+        FloorDiskFire = new THREE.Mesh( geometry, floorDiskMaterial);
         FloorDiskFire.position.set(0,0.2,0);
         FloorDiskFire.castShadow = true;
         FloorDiskFire.receiveShadow = true;
         FloorDiskFire.scale.set(1.5,1.5,1.5);
-        //FloorDiskFire.rotation.y = -0.78;
-    } );
-    
-    //----Floor Disk Loader -----//
-    
-    /*var floorDiskmaterial = new THREE.MeshLambertMaterial({
-        map: THREE.ImageUtils.loadTexture('img/FloorDiskMapColor.png'),
-        transparent: true,
+        
+        scene.add(FloorDiskFire);
     });
-
-    loader.load( "models/FloorDisk.js", function( geometry ) {
-        FloorDiskFire = new THREE.Mesh( geometry, floorDiskmaterial);
-        FloorDiskFire.position.set(-215,0,0);
-        FloorDiskFire.castShadow = true;
-        FloorDiskFire.receiveShadow = true;
-        FloorDiskFire.rotation.y = -0.78;
-    } );
-    
-    loader.load( "models/FloorDisk.js", function( geometry ) {
-        FloorDiskEarth = new THREE.Mesh( geometry, floorDiskmaterial);
-        FloorDiskEarth.position.set(0,0,215);
-        FloorDiskEarth.castShadow = true;
-        FloorDiskEarth.receiveShadow = true;
-        FloorDiskEarth.rotation.y = 0.8;
-    } );
-    
-    loader.load( "models/FloorDisk.js", function( geometry ) {
-        FloorDiskWater = new THREE.Mesh( geometry, floorDiskmaterial);
-        FloorDiskWater.position.set(215,0,0);
-        FloorDiskWater.castShadow = true;
-        FloorDiskWater.receiveShadow = true;
-        FloorDiskWater.rotation.y = 2.4;
-    } );
-    
-    loader.load( "models/FloorDisk.js", function( geometry ) {
-        FloorDiskAir = new THREE.Mesh( geometry, floorDiskmaterial);
-        FloorDiskAir.position.set(0,0,-215);
-        FloorDiskAir.castShadow = true;
-        FloorDiskAir.receiveShadow = true;
-        FloorDiskAir.rotation.y = -2.35;
-    } );*/
-    
-    //-----Pillar Loader------//
     
     var pillarMaterial = new THREE.MeshPhongMaterial({
         map: THREE.ImageUtils.loadTexture('img/pillarMap.jpg'),
@@ -435,6 +348,8 @@ function loadObjects()
         firePillar.castShadow = true;
         firePillar.receiveShadow = true;
         firePillar.scale.set(1.7,1.7,1.7);
+        
+        scene.add(firePillar);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
@@ -443,6 +358,8 @@ function loadObjects()
         earthPillar.castShadow = true;
         earthPillar.receiveShadow = true;
         earthPillar.scale.set(1.7,1.7,1.7);
+        
+        scene.add(earthPillar);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
@@ -451,6 +368,8 @@ function loadObjects()
         airPillar.castShadow = true;
         airPillar.receiveShadow = true;
         airPillar.scale.set(1.7,1.7,1.7);
+        
+        scene.add(airPillar);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
@@ -459,23 +378,27 @@ function loadObjects()
         waterPillar.castShadow = true;
         waterPillar.receiveShadow = true;
         waterPillar.scale.set(1.7,1.7,1.7);
+        
+        scene.add(waterPillar);
     } );
     
-    var fireMaterial = new THREE.MeshPhongMaterial({
-        //map: THREE.ImageUtils.loadTexture('img/pillarMap.jpg'),
-        //transparent: true,
-        color: 0xf9d00b,
-        ambient: 0xeaeaea,
-        overdraw: 0.5,
-        shininess: 50,
-    });
-    
     loader.load( "models/fire.js", function( fire ) {
+        var fireMaterial = new THREE.MeshPhongMaterial({
+            //map: THREE.ImageUtils.loadTexture('img/pillarMap.jpg'),
+            //transparent: true,
+            color: 0xf9d00b,
+            ambient: 0xeaeaea,
+            overdraw: 0.5,
+            shininess: 50,
+        });
+        
         fire = new THREE.Mesh(fire, fireMaterial);
-        fire.position.set(-135,100,-135);
+        fire.position.set(-135,70,-135);
         fire.castShadow = true;
         fire.receiveShadow = true;
-        //fire.scale.set(1.7,1.7,1.7);
+        fire.scale.set(0.8,0.8,0.8);
+        
+        scene.add(fire);
     } );
 }
 
