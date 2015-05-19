@@ -29,6 +29,8 @@
     <script src="js/OBJLoader.js"></script>
     <script src="js/OBJMTLLoader.js"></script>
     <script src="js/MTLLoader.js"></script>
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenLite.min.js"></script>
 
     <script src="bower_components/screenfull/dist/screenfull.js"></script>
     <script src="js/jquery-1.11.2.min.js"></script>
@@ -59,7 +61,7 @@
 
 // MAIN 
 // standard global variables
-var container, scene, camera, renderer, controls, stats, loader;
+var container, scene, camera, renderer, controls, stats, loader, directionalLight;
 //var keyboard = new KeyboardState();
 var clock = new THREE.Clock();
   
@@ -71,6 +73,7 @@ var firePillar, waterPillar, earthPillar, airPillar;
 var fire, water, earth, air;
   
 var check = false;
+var click = 0;
 
 //loadObjects();
 init();
@@ -93,7 +96,7 @@ function init()
   
   //alert(check);
   
-    document.getElementById('button').addEventListener('click', function () {
+    $('#button').click(function () {
         if (screenfull.enabled) {
             screenfull.request();
             
@@ -101,6 +104,15 @@ function init()
                 "opacity":"0",
                 "pointer-events":"none",
             });
+            
+            TweenLite.to(directionalLight, 6, {intensity: 1});
+            
+            /*for (i = 0; i <= 1; i += 0.00001)
+            {
+                console.log(i +'i');
+                console.log(directionalLight.intensity);
+                directionalLight.intensity = i;
+            }*/
         } else {
             // Ignore or do something else
         }
@@ -116,7 +128,7 @@ function init()
 	scene.add(camera);
 	camera.position.set(0,150,0);
   
-	scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
+    scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
   
 	//camera.rotation.x = -90;
 	// RENDERER
@@ -139,17 +151,10 @@ function init()
 	container.appendChild( renderer.domElement );
 	// EVENTS
 	THREEx.WindowResize(renderer, camera);
-	//THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
   
 	// CONTROLS
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
-  
-	// STATS
-	/*stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.zIndex = 100;
-	container.appendChild( stats.domElement );*/
+
     
     var infiniteFloorTexture = new THREE.MeshPhongMaterial({
         color: 0x062537,
@@ -242,7 +247,6 @@ function init()
 		vertexColors: THREE.VertexColors,
 		side: THREE.BackSide,
 		depthWrite: false,
-		//depthTest: false,
 		fog: false,
 	});
 
@@ -261,13 +265,10 @@ function init()
 	testAni2 = new TextureAnimator( runner2Texture, 4, 4, 16, 75 ); // texture, #horiz, #vert, #total, duration.
 	var runner2Material = new THREE.MeshBasicMaterial( { map: runner2Texture, side:THREE.DoubleSide } );
     
-    // cylinder
-    
-    //var pillarMaterial = new THREE.MeshLambertMaterial( { color: 0xeaeaea } );
     
     // LIGHT
     
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 	directionalLight.position.set(500, 1000, 0);
     directionalLight.castShadow = true;
     //directionalLight.shadowBias = -0.0018;
@@ -275,7 +276,7 @@ function init()
     directionalLight.shadowMapWidth = 2042;
     directionalLight.shadowMapHeight = 2042;
     
-    //directionalLight.intensity = 0;
+    directionalLight.intensity = 0;
     
 	scene.add(directionalLight);
   
@@ -313,6 +314,10 @@ function init()
     //scene.add(ambientLight);
     
     loader = new THREE.JSONLoader();
+    fireGroup = new THREE.Object3D();
+    earthGroup = new THREE.Object3D();
+    waterGroup = new THREE.Object3D();
+    airGroup = new THREE.Object3D();
     
     loader.load("models/floorScene.js", function( geometry ) {
         var floorDiskMaterial = new THREE.MeshPhongMaterial({
@@ -344,42 +349,45 @@ function init()
     
     loader.load( "models/pillar.js", function( pillar ) {
         firePillar = new THREE.Mesh(pillar, pillarMaterial);
-        firePillar.position.set(135,0,135);
+        firePillar.position.set(135,-50,135);
         firePillar.castShadow = true;
         firePillar.receiveShadow = true;
         firePillar.scale.set(1.7,1.7,1.7);
         
-        scene.add(firePillar);
+        fireGroup.add(firePillar);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
         earthPillar = new THREE.Mesh(pillar, pillarMaterial);
-        earthPillar.position.set(135,0,-135);
+        earthPillar.position.set(135,-50,-135);
         earthPillar.castShadow = true;
         earthPillar.receiveShadow = true;
         earthPillar.scale.set(1.7,1.7,1.7);
         
-        scene.add(earthPillar);
+        earthGroup.add(earthPillar);
+        scene.add(earthGroup);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
         airPillar = new THREE.Mesh(pillar, pillarMaterial);
-        airPillar.position.set(-135,0,135);
+        airPillar.position.set(-135,-50,135);
         airPillar.castShadow = true;
         airPillar.receiveShadow = true;
         airPillar.scale.set(1.7,1.7,1.7);
         
-        scene.add(airPillar);
+        airGroup.add(airPillar);
+        scene.add(airGroup);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
         waterPillar = new THREE.Mesh(pillar, pillarMaterial);
-        waterPillar.position.set(-135,0,-135);
+        waterPillar.position.set(-135,-50,-135);
         waterPillar.castShadow = true;
         waterPillar.receiveShadow = true;
         waterPillar.scale.set(1.7,1.7,1.7);
         
-        scene.add(waterPillar);
+        waterGroup.add(waterPillar);
+        scene.add(waterGroup);
     } );
     
     loader.load( "models/fire.js", function( fire ) {
@@ -393,12 +401,13 @@ function init()
         });
         
         fire = new THREE.Mesh(fire, fireMaterial);
-        fire.position.set(-135,70,-135);
+        fire.position.set(135,10,135);
         fire.castShadow = true;
         fire.receiveShadow = true;
         fire.scale.set(0.8,0.8,0.8);
         
-        scene.add(fire);
+        fireGroup.add(fire);
+        scene.add(fireGroup);
     } );
 }
 
@@ -430,10 +439,22 @@ function update()
 
 function render() 
 {
+    console.log(fireGroup.position.y);
+    $('#button').mouseup(function() {
+       click = 1;
+    });
+    
+    if (click == 1)
+    {
+        setTimeout(function(){
+                TweenLite.to(fireGroup.position, 6, {y: 50});
+                TweenLite.to(earthGroup.position, 6, {y: 50});
+                TweenLite.to(waterGroup.position, 6, {y: 50});
+                TweenLite.to(airGroup.position, 6, {y: 50});
+        }, 5000);
+    }
+    
 	renderer.render( scene, camera );
-  
-//    cubeCamera.updateCubeMap( renderer, scene );
- 
 }
   
 function TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) 
