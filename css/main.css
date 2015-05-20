@@ -22,8 +22,7 @@ html {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        width: 30%; }
+        transform: translate(-50%, -50%); }
         @media only screen and (max-width: 500px) {
           html body .loader .holder {
             width: 80%; } }
@@ -36,8 +35,7 @@ html {
           font-family: "Open Sans", sans-serif;
           -webkit-margin-before: 0;
           -webkit-margin-after: 0;
-          text-align: center;
-          margin-top: 30px; }
+          text-align: center; }
         html body .loader .holder .mobile-link {
           margin-top: 30px;
           border: solid 1px white;
@@ -59,8 +57,7 @@ html {
           font-family: "Open Sans", sans-serif;
           -webkit-margin-before: 0;
           -webkit-margin-after: 0;
-          text-align: center;
-          margin-top: 100px; }
+          text-align: center; }
         html body .loader .holder #button {
           height: auto;
           width: 30%;

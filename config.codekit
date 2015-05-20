@@ -214,6 +214,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/img\/triangleMap.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 30403,
+		"inputAbbreviatedPath": "\/img\/triangleMap.jpg",
+		"outputAbbreviatedPath": "\/img\/triangleMap.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/index.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -526,6 +537,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/models\/pillar.js",
 		"outputAbbreviatedPath": "\/models\/min\/pillar-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 1
+		},
+	"\/models\/shoe.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/models\/shoe.js",
+		"outputAbbreviatedPath": "\/models\/min\/shoe-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
