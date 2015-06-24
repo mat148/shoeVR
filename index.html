@@ -24,7 +24,7 @@
 
     <script src="js/THREEx.FullScreen.js"></script>
     <script src="js/THREEx.WindowResize.js"></script>
-    <!--<script src="js/DeviceOrientationControls.js"></script>-->
+    <script src="js/DeviceOrientationControls.js"></script>
 
     <script src="js/OBJLoader.js"></script>
     <script src="js/OBJMTLLoader.js"></script>
@@ -89,16 +89,19 @@ function init()
   
   //alert(window.innerWidth);
   
-  /*if(window.innerWidth >= 1000)
+  if(window.innerWidth >= 1000)
   {
-    $('#button').addClass('hidden');
-    $('.desktop-info').removeClass('hidden');
-    $('.mobile-link').removeClass('hidden');
-  }*/
+    //$('#button').addClass('hidden');
+    //$('.desktop-info').removeClass('hidden');
+    //$('.mobile-link').removeClass('hidden');
+      
+    //controls = new THREE.DeviceOrientationControls( camera );
+  }
   
     $('#button').click(function () {
         if (screenfull.enabled) {
             screenfull.request();
+            camera.position.set(0,50,0);
             
             $('.loader').css({
                 "opacity":"0",
@@ -109,30 +112,29 @@ function init()
             TweenMax.to(pointLight, 6, {intensity: 1});
             createjs.Sound.play(backgroundSound);
             
-            /*for (i = 0; i <= 1; i += 0.00001)
+            if(window.innerWidth >= 1000)
             {
-                console.log(i +'i');
-                console.log(directionalLight.intensity);
-                directionalLight.intensity = i;
-            }*/
+                //controls = new THREE.OrbitControls( camera, renderer.domElement );
+            }
+            
         } else {
             // Ignore or do something else
         }
     });
 	// SCENE
 	scene = new THREE.Scene();
+    
+    scene.add( new THREE.AxisHelper( 20 ) );
   
 	// CAMERA
 	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
     camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     //controls = new THREE.DeviceOrientationControls( camera );
-    //camera.position.set(0,150,150);
 	scene.add(camera);
   
     //scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
   
-	//camera.rotation.x = -90;
 	// RENDERER
 	if ( Detector.webgl ){
 		renderer = new THREE.WebGLRenderer( {antialias:true} );
@@ -153,9 +155,6 @@ function init()
 	container.appendChild( renderer.domElement );
 	// EVENTS
 	THREEx.WindowResize(renderer, camera);
-  
-	// CONTROLS
-	//controls = new THREE.OrbitControls( camera, renderer.domElement );
 
     
     var infiniteFloorTexture = new THREE.MeshPhongMaterial({
@@ -409,7 +408,7 @@ function init()
         fireShoe.scale.set(1.5,1.5,1.5);
         
         fireGroup.add(fireShoe);
-        fireGroup.position.set(135, -30, 135);
+        fireGroup.position.set(135, -50, 135);
         fireGroup.children[1].translateY(70);
         fireGroup.children[2].translateY(70);
         fireGroup.children[3].translateY(70);
@@ -466,8 +465,7 @@ function animate()
     requestAnimationFrame( animate );
 	render();		
 	update();
-    //controls.update();
- 
+    controls.update();
 }
 
 function update()
@@ -500,8 +498,8 @@ function render()
         }, 5000);
         
         rotate();
-        camera.rotation.y += 0.005 * 2;
-        camera.position.z = 1000;
+        camera.rotation.y += 0.001 * 2;
+        //camera.position.z = 1000;
     }
     
     raycaster.set(camera, 0);
