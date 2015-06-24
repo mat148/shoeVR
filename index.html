@@ -101,7 +101,8 @@ function init()
     $('#button').click(function () {
         if (screenfull.enabled) {
             screenfull.request();
-            camera.position.set(0,50,0);
+            camera.position.set(0,300,0);
+            //camera.rotation.set(0,300, 0);
             
             $('.loader').css({
                 "opacity":"0",
@@ -271,6 +272,7 @@ function init()
     earthGroup = new THREE.Object3D();
     waterGroup = new THREE.Object3D();
     airGroup = new THREE.Object3D();
+    masterGroup = new THREE.Object3D();
     
     loader.load("models/floorScene.js", function( geometry ) {
         var floorDiskMaterial = new THREE.MeshPhongMaterial({
@@ -289,6 +291,8 @@ function init()
         FloorDiskFire.scale.set(1.5,1.5,1.5);
         
         scene.add(FloorDiskFire);
+        
+        masterGroup.add(FloorDiskFire);
     });
     
     var pillarMaterial = new THREE.MeshPhongMaterial({
@@ -319,6 +323,8 @@ function init()
         
         earthGroup.add(earthPillar);
         scene.add(earthGroup);
+        
+        masterGroup.add(earthGroup);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
@@ -330,6 +336,8 @@ function init()
         
         airGroup.add(airPillar);
         scene.add(airGroup);
+        
+        masterGroup.add(airGroup);
     } );
     
     loader.load( "models/pillar.js", function( pillar ) {
@@ -341,6 +349,8 @@ function init()
         
         waterGroup.add(waterPillar);
         scene.add(waterGroup);
+        
+        masterGroup.add(waterGroup);
     } );
     
     loader.load( "models/fire.js", function( fire ) {
@@ -414,8 +424,9 @@ function init()
         fireGroup.children[3].translateY(70);
         scene.add(fireGroup);
         
+        masterGroup.add(fireGroup);
+        
         //controls = new THREE.DeviceOrientationControls( camera );
-        camera.position.set(0, 300, 0);
     } );
     
     // LIGHT
@@ -431,20 +442,18 @@ function init()
     directionalLight.intensity = 0;
     
 	scene.add(directionalLight);
+    
+    //masterGroup.add(directionalLight);
   
     var pointLight = new THREE.PointLight(0xffffff, 1, 5000);
     pointLight.position.set(160, 300, 160);
     pointLight.intensity = 0;
     scene.add(pointLight);
-
-	/*var hemisphereLight = new THREE.HemisphereLight(0x6a3e6d, 0x007c9a , 0.1);
-	hemisphereLight.position.set(-1, 2, 1.5);
-	scene.add(hemisphereLight);*/
-  
-    //var ambientLight = new THREE.AmbientLight(0xffffff);
-    //ambientLight.color.setRGB( 255 * 0.005, 255 * 0.005, 255 * 0.005);
-    //scene.add(ambientLight);
-    //camera.lookAt(fire);
+    
+    //masterGroup.add(pointLight);
+    scene.add(masterGroup);
+    masterGroup.scale.set(3,3,3);
+	
     animate();
 }
     
