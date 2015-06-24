@@ -24,13 +24,14 @@
 
     <script src="js/THREEx.FullScreen.js"></script>
     <script src="js/THREEx.WindowResize.js"></script>
-    <script src="js/DeviceOrientationControls.js"></script>
+    <!--<script src="js/DeviceOrientationControls.js"></script>-->
 
     <script src="js/OBJLoader.js"></script>
     <script src="js/OBJMTLLoader.js"></script>
     <script src="js/MTLLoader.js"></script>
     
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenLite.min.js"></script>
+    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenLite.min.js"></script>-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"></script>
 
     <script src="bower_components/screenfull/dist/screenfull.js"></script>
     <script src="https://code.createjs.com/soundjs-0.6.0.min.js"></script>
@@ -104,8 +105,8 @@ function init()
                 "pointer-events":"none",
             });
             
-            TweenLite.to(directionalLight, 6, {intensity: 1});
-            TweenLite.to(pointLight, 6, {intensity: 1});
+            TweenMax.to(directionalLight, 2000, {delay: 500000000000000, intensity: 1});
+            TweenMax.to(pointLight, 6, {intensity: 1});
             createjs.Sound.play(backgroundSound);
             
             /*for (i = 0; i <= 1; i += 0.00001)
@@ -125,11 +126,11 @@ function init()
 	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
     camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
-    controls = new THREE.DeviceOrientationControls( camera );
-    camera.position.set(0,150,0);
+    //controls = new THREE.DeviceOrientationControls( camera );
+    //camera.position.set(0,150,150);
 	scene.add(camera);
   
-    scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
+    //scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
   
 	//camera.rotation.x = -90;
 	// RENDERER
@@ -154,7 +155,7 @@ function init()
 	THREEx.WindowResize(renderer, camera);
   
 	// CONTROLS
-	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	//controls = new THREE.OrbitControls( camera, renderer.domElement );
 
     
     var infiniteFloorTexture = new THREE.MeshPhongMaterial({
@@ -169,7 +170,7 @@ function init()
     
     var infiniteFloor = new THREE.Mesh(new THREE.PlaneBufferGeometry(20000, 20000, 10, 10), infiniteFloorTexture);
     infiniteFloor.overdraw = true;
-	infiniteFloor.position.y = -5;
+	infiniteFloor.position.y = -2;
 	infiniteFloor.rotation.x = Math.PI / 2;
     infiniteFloor.castShadow = false;
     infiniteFloor.receiveShadow = true;
@@ -277,13 +278,13 @@ function init()
             map: THREE.ImageUtils.loadTexture('img/floorSceneMap.jpg'),
             transparent: true,
             color: 0xeaeaea,
-            ambient: 0xeaeaea,
-            overdraw: 0.5,
-            shininess: 50,
+            //ambient: 0xeaeaea,
+            //overdraw: 0.5,
+            //shininess: 50,
         });
         
         FloorDiskFire = new THREE.Mesh( geometry, floorDiskMaterial);
-        FloorDiskFire.position.set(0,0.2,0);
+        FloorDiskFire.position.set(0,0,0);
         FloorDiskFire.castShadow = true;
         FloorDiskFire.receiveShadow = true;
         FloorDiskFire.scale.set(1.5,1.5,1.5);
@@ -361,6 +362,7 @@ function init()
         fire.scale.set(0.8,0.8,0.8);
         
         fireGroup.add(fire);
+        fireGroup.receiveShadow = true;
         //scene.add(fireGroup);
     } );
     
@@ -407,7 +409,7 @@ function init()
         fireShoe.scale.set(1.5,1.5,1.5);
         
         fireGroup.add(fireShoe);
-        fireGroup.position.set(135, -50, 135);
+        fireGroup.position.set(135, -30, 135);
         fireGroup.children[1].translateY(70);
         fireGroup.children[2].translateY(70);
         fireGroup.children[3].translateY(70);
@@ -464,7 +466,7 @@ function animate()
     requestAnimationFrame( animate );
 	render();		
 	update();
-    controls.update();
+    //controls.update();
  
 }
 
@@ -479,10 +481,6 @@ function update()
 	{	  
 		// do something
 	}*/
-	
-	//controls.update();
-    //camera.lookAt(firePillar.position);
-	//stats.update();
 }
 
 function render() 
@@ -502,6 +500,8 @@ function render()
         }, 5000);
         
         rotate();
+        camera.rotation.y += 0.005 * 2;
+        camera.position.z = 1000;
     }
     
     raycaster.set(camera, 0);
