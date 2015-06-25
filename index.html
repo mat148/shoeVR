@@ -111,8 +111,6 @@ function init()
     //$('#button').addClass('hidden');
     //$('.desktop-info').removeClass('hidden');
     //$('.mobile-link').removeClass('hidden');
-      
-    //controls = new THREE.DeviceOrientationControls( camera );
   }
   
     $('#button').click(function () {
@@ -129,11 +127,6 @@ function init()
             TweenMax.to(directionalLight, 2000, {delay: 500000000000000, intensity: 1});
             TweenMax.to(pointLight, 6, {intensity: 1});
             createjs.Sound.play(backgroundSound);
-            
-            if(window.innerWidth >= 1000)
-            {
-                //controls = new THREE.OrbitControls( camera, renderer.domElement );
-            }
             
         } else {
             // Ignore or do something else
