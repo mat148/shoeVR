@@ -156,7 +156,7 @@ function init()
     camera.fov = 70;
     camera.updateProjectionMatrix();
   
-    //scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
+    scene.fog = new THREE.FogExp2(0x6a3e6d, 0.00150);
   
 	// RENDERER
 	if ( Detector.webgl ){
@@ -513,7 +513,8 @@ function onDocumentMouseMove( event ) {
 }
 
 function onDocumentMouseUp( event ) {
-
+        
+        targetRotationX = 0;
         document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
         document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
         document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
@@ -579,22 +580,17 @@ function render()
         
         rotate();
         
-        //horizontal rotation   
-     camera.rotation.y += ( targetRotationX - camera.rotation.y ) * 0.1;
+        if (targetRotationX == 0)
+        {
+        }
         
-        //camera.rotation.y += 0.001 * 2;
-        //camera.position.z = 1000;
+        else
+        {
+            //horizontal rotation   
+            camera.rotation.y += ( targetRotationX - camera.rotation.y ) * 0.01;
+        }
+        
     }
-    
-    raycaster.set(camera, 0);
-    
-    var intersects = raycaster.intersectObjects( scene.children );
-
-	for ( var i = 0; i < intersects.length; i++ ) {
-
-		intersects[ i ].object.material.color.set( 0xff0000 );
-	
-	}
     
 	renderer.render( scene, camera );
 }
